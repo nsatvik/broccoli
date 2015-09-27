@@ -26,7 +26,6 @@ import com.ck.hack.olaalert.app.OlaAlertApp;
 import com.ck.hack.olaalert.domain.CabBookingResponse;
 import com.ck.hack.olaalert.domain.CabCategory;
 import com.ck.hack.olaalert.domain.ProductsResponse;
-import com.ck.hack.olaalert.domain.ResponseListener;
 import com.ck.hack.olaalert.service.OlaService;
 import com.ck.hack.olaalert.utils.BackgroundLooper;
 import com.ck.hack.olaalert.utils.Utils;

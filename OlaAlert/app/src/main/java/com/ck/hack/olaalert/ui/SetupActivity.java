@@ -68,11 +68,7 @@ public class SetupActivity extends AppCompatActivity implements FragmentManager.
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar == null) return;
-        if (mCurrentStep == SetupStep.ENTER_USER_INFO) {
-            actionBar.setDisplayHomeAsUpEnabled(false);
-            actionBar.setDisplayShowHomeEnabled(false);
-            actionBar.setHomeButtonEnabled(false);
-        } else if (mCurrentStep == SetupStep.VERIFY_USER_INFO || mCurrentStep == SetupStep.USER_LOGIN) {
+        if (mCurrentStep == SetupStep.USER_LOGIN) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
             actionBar.setHomeButtonEnabled(true);
@@ -85,12 +81,7 @@ public class SetupActivity extends AppCompatActivity implements FragmentManager.
         switch (item.getItemId()) {
             case android.R.id.home:
                 Log.v(LOGTAG, "Back in action bar pressed. Step = " + mCurrentStep);
-                if (mCurrentStep.equals(SetupStep.ENTER_USER_INFO)) {
-                    Log.e(LOGTAG, "SetupUserInfoFragment should have menu items at all!");
-                    finish();
-                } else {
-                    onBackPressed();
-                }
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -98,8 +89,6 @@ public class SetupActivity extends AppCompatActivity implements FragmentManager.
     }
 
     public enum SetupStep {
-        ENTER_USER_INFO,
-        VERIFY_USER_INFO,
         USER_LOGIN
     }
 }

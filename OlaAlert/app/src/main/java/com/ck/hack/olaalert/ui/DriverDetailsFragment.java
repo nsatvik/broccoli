@@ -18,16 +18,12 @@ import com.ck.hack.olaalert.app.DataManager;
 import com.ck.hack.olaalert.app.OlaAlertApp;
 import com.ck.hack.olaalert.domain.CabBookingResponse;
 import com.ck.hack.olaalert.domain.CancelBookingResponse;
-import com.ck.hack.olaalert.domain.Doctor;
-import com.ck.hack.olaalert.domain.DoctorResponse;
 import com.ck.hack.olaalert.domain.GoogleMapResponse;
 import com.ck.hack.olaalert.domain.Hospital;
 import com.ck.hack.olaalert.domain.Location;
 import com.ck.hack.olaalert.service.PractoService;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
-
-import org.w3c.dom.Text;
 
 /**
  * Created by Satvik on 27/09/15.

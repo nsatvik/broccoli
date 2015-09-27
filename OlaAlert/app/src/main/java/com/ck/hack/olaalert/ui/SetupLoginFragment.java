@@ -27,7 +27,6 @@ public class SetupLoginFragment extends Fragment {
 
     private EditText mName;
     private EditText mEmail;
-    private ProgressBar mProgBar;
 
     private DataManager mDataMan;
 
@@ -63,9 +62,6 @@ public class SetupLoginFragment extends Fragment {
             actionBar.setDisplayShowHomeEnabled(true);
             actionBar.setHomeButtonEnabled(true);
         }
-
-        mProgBar = (ProgressBar) rootView.findViewById(R.id.prog_bar);
-
 
         mEmail = (EditText) rootView.findViewById(R.id.email);
         mName = (EditText) rootView.findViewById(R.id.name);
