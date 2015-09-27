@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
@@ -76,6 +77,19 @@ public class DataManager {
                 }
             }
         }
+    }
+
+    public void clearAllRequests() {
+        mRequestQueue.cancelAll(new RequestQueue.RequestFilter() {
+            @Override
+            public boolean apply(Request<?> request) {
+                return true;
+            }
+        });
+    }
+
+    public RequestQueue getRequestQueue() {
+        return mRequestQueue;
     }
 
     public AppInfo getAppInfo() {

@@ -22,6 +22,8 @@ import java.util.Date;
  */
 public class Utils {
 
+    public static final String BASE_URL = "http://sandbox-t.olacabs.com";
+
     public static final long ONE_MINUTE = 60 * 1000;
     public static final long ONE_HOUR = 60 * ONE_MINUTE;
 
