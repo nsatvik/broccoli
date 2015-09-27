@@ -20,6 +20,9 @@ import com.ck.hack.olaalert.domain.CabBookingResponse;
 import com.ck.hack.olaalert.domain.CancelBookingResponse;
 import com.ck.hack.olaalert.domain.Doctor;
 import com.ck.hack.olaalert.domain.DoctorResponse;
+import com.ck.hack.olaalert.domain.GoogleMapResponse;
+import com.ck.hack.olaalert.domain.Hospital;
+import com.ck.hack.olaalert.domain.Location;
 import com.ck.hack.olaalert.service.PractoService;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
@@ -35,7 +38,7 @@ public class DriverDetailsFragment extends Fragment {
 
     private CabBookingResponse mBookingResponse;
     private PractoService mPractoService;
-    private Doctor mDoctor;
+    private Hospital mHospital;
 
     public DriverDetailsFragment() {
         // NO OP
@@ -70,6 +73,7 @@ public class DriverDetailsFragment extends Fragment {
                 R.layout.fragment_driver_details, container, false);
         Bundle args = getArguments();
         Gson gson = new Gson();
+        final TextView docDetails = (TextView) rootView.findViewById(R.id.destination_details);
         mBookingResponse = gson.fromJson(args.getString("driver_data_key"), CabBookingResponse.class);
         if (mBookingResponse != null) {
             TextView driverName = (TextView) rootView.findViewById(R.id.driver_name);
@@ -84,66 +88,69 @@ public class DriverDetailsFragment extends Fragment {
             TextView carName = (TextView) rootView.findViewById(R.id.car_name);
             carName.setText(mBookingResponse.getCar_model());
 
-            final TextView docDetails = (TextView) rootView.findViewById(R.id.destination_details);
 
-            Response.Listener<DoctorResponse> listener = new Response.Listener<DoctorResponse>() {
-                @Override
-                public void onResponse(DoctorResponse response) {
-                    Log.v(LOGTAG, "Doctor success ");
-                    Doctor doc = response.getDoctors().get(0);
-                    mDoctor = doc;
-                    docDetails.setText(doc.getDoctor_name()+"\n"+doc.getLocality());
-                }
-            };
 
-            final Response.ErrorListener errorListener = new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    error.printStackTrace();
-                    Log.v(LOGTAG, "Doctor error : " + error.getMessage());
-                }
-            };
-            LatLng latLng = new LatLng(args.getDouble("lat"), args.getDouble("lng"));
-            mPractoService = new PractoService(mDataMan);
-            mPractoService.getDoctorDetails(latLng, listener, errorListener);
 
-            rootView.findViewById(R.id.navigate).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Uri location = null;
-
-                    if (mDoctor != null) {
-                        location = Uri.parse("http://maps.google.com/maps?daddr=" + mDoctor.getLocality_latitude() + "," + mDoctor.getLocality_longitude());
-                    } else {
-                        location = Uri.parse("http://maps.google.com/maps?daddr=12.9596717,77.6467143");
-                    }
-                    Intent intent = new Intent(Intent.ACTION_VIEW, location);
-                    try {
-                        startActivity(intent);
-                    } catch (android.content.ActivityNotFoundException ex) {
-                        Log.v(LOGTAG, "Maps app not found!");
-                    }
-                }
-            });
-
-            rootView.findViewById(R.id.cancel_button).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Response.Listener<CancelBookingResponse> listener = new Response.Listener<CancelBookingResponse>() {
-                        @Override
-                        public void onResponse(CancelBookingResponse response) {
-                            Log.v(LOGTAG, "Cancel success "+response.toString());
-                           MainActivity host = (MainActivity) getActivity();
-                            if (host != null) {
-                                host.showPage(MainActivity.Screen.HOME_PAGE);
-                            }
-                        }
-                    };
-
-                    mDataMan.getOlaService().cancelRide(mBookingResponse.getCrn(), listener, errorListener);
-                }
-            });
         }
+        Response.Listener<GoogleMapResponse> listener = new Response.Listener<GoogleMapResponse>() {
+            @Override
+            public void onResponse(GoogleMapResponse response) {
+                Log.v(LOGTAG, "Doctor success ");
+                Hospital hospital = response.getResults().get(0);
+                mHospital = hospital;
+                docDetails.setText(hospital.getName()+"\n"+hospital.getVicinity());
+            }
+        };
+
+        final Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                Log.v(LOGTAG, "Doctor error : " + error.getMessage());
+            }
+        };
+
+        LatLng latLng = new LatLng(args.getDouble("lat"), args.getDouble("lng"));
+        mPractoService = new PractoService(mDataMan);
+        mPractoService.getDoctorDetails(latLng, listener, errorListener);
+
+        rootView.findViewById(R.id.navigate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri location = null;
+
+                if (mHospital != null) {
+                    Location loc = mHospital.getGeometry().getLocation();
+                    location = Uri.parse("http://maps.google.com/maps?daddr=" + loc.getLat() + "," + loc.getLng());
+                } else {
+                    location = Uri.parse("http://maps.google.com/maps?daddr=12.9596717,77.6467143");
+                }
+                Intent intent = new Intent(Intent.ACTION_VIEW, location);
+                try {
+                    startActivity(intent);
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Log.v(LOGTAG, "Maps app not found!");
+                }
+            }
+        });
+
+        rootView.findViewById(R.id.cancel_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Response.Listener<CancelBookingResponse> listener = new Response.Listener<CancelBookingResponse>() {
+                    @Override
+                    public void onResponse(CancelBookingResponse response) {
+                        Log.v(LOGTAG, "Cancel success "+response.toString());
+                        MainActivity host = (MainActivity) getActivity();
+                        if (host != null) {
+                            host.showPage(MainActivity.Screen.HOME_PAGE);
+                        }
+                    }
+                };
+
+                mDataMan.getOlaService().cancelRide(mBookingResponse.getCrn(), listener, errorListener);
+            }
+        });
 
         return rootView;
     }
