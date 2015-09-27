@@ -36,8 +36,8 @@ public class OlaService {
 
 
 
-    public void bookCab(LatLng loc, Response.Listener<CabBookingResponse> listener, Response.ErrorListener errorListener) {
-        String path = "/v1/bookings/create?pickup_lat=" + loc.latitude + "&pickup_lng=" + loc.longitude+"&pickup_mode=NOW&category=sedan";
+    public void bookCab(String category, LatLng loc, Response.Listener<CabBookingResponse> listener, Response.ErrorListener errorListener) {
+        String path = "/v1/bookings/create?pickup_lat=" + loc.latitude + "&pickup_lng=" + loc.longitude+"&pickup_mode=NOW&category="+category;
         GsonRequest listCabRequest = new GsonRequest(Utils.BASE_URL+path, CabBookingResponse.class, headers, listener, errorListener );
         queue.add(listCabRequest);
     }
@@ -50,7 +50,7 @@ public class OlaService {
 
     public void cancelRide(String crnId, Response.Listener<CancelBookingResponse> listener, Response.ErrorListener errorListener) {
         String path = "/v1/bookings/cancel?crn="+crnId;
-        GsonRequest listCabRequest = new GsonRequest(Utils.BASE_URL+path, ProductsResponse.class, headers, listener, errorListener );
+        GsonRequest listCabRequest = new GsonRequest(Utils.BASE_URL+path, CancelBookingResponse.class, headers, listener, errorListener );
         queue.add(listCabRequest);
     }
 }

@@ -310,8 +310,11 @@ public class HomeFragment extends Fragment implements GoogleApiClient.Connection
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Log.v(LOGTAG, "Listing Products error : " + error.getMessage());
-                    Toast.makeText(getActivity(), "No cabs found!", Toast.LENGTH_LONG).show();
-                            mProgressBar.setVisibility(View.GONE);
+                    Activity host = getActivity();
+                    if (host != null) {
+                        Toast.makeText(host, "No cabs found!", Toast.LENGTH_LONG).show();
+                        mProgressBar.setVisibility(View.GONE);
+                    }
                 }
             };
             olaService.listCabProducts(mCurrentLatLng, listener, errorListener);
@@ -339,6 +342,6 @@ public class HomeFragment extends Fragment implements GoogleApiClient.Connection
             }
         };
         OlaService olaService = mDataManager.getOlaService();
-        olaService.bookCab(mCurrentLatLng, listener, errorListener);
+        olaService.bookCab(category, mCurrentLatLng, listener, errorListener);
     }
 }

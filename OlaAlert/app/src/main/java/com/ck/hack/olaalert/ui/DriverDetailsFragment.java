@@ -17,6 +17,7 @@ import com.ck.hack.olaalert.R;
 import com.ck.hack.olaalert.app.DataManager;
 import com.ck.hack.olaalert.app.OlaAlertApp;
 import com.ck.hack.olaalert.domain.CabBookingResponse;
+import com.ck.hack.olaalert.domain.CancelBookingResponse;
 import com.ck.hack.olaalert.domain.Doctor;
 import com.ck.hack.olaalert.domain.DoctorResponse;
 import com.ck.hack.olaalert.service.PractoService;
@@ -95,7 +96,7 @@ public class DriverDetailsFragment extends Fragment {
                 }
             };
 
-            Response.ErrorListener errorListener = new Response.ErrorListener() {
+            final Response.ErrorListener errorListener = new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     error.printStackTrace();
@@ -122,6 +123,24 @@ public class DriverDetailsFragment extends Fragment {
                     } catch (android.content.ActivityNotFoundException ex) {
                         Log.v(LOGTAG, "Maps app not found!");
                     }
+                }
+            });
+
+            rootView.findViewById(R.id.cancel_button).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Response.Listener<CancelBookingResponse> listener = new Response.Listener<CancelBookingResponse>() {
+                        @Override
+                        public void onResponse(CancelBookingResponse response) {
+                            Log.v(LOGTAG, "Cancel success "+response.toString());
+                           MainActivity host = (MainActivity) getActivity();
+                            if (host != null) {
+                                host.showPage(MainActivity.Screen.HOME_PAGE);
+                            }
+                        }
+                    };
+
+                    mDataMan.getOlaService().cancelRide(mBookingResponse.getCrn(), listener, errorListener);
                 }
             });
         }
