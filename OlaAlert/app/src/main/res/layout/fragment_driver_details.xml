@@ -1,44 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
     android:layout_height="match_parent"
     android:layout_marginLeft="@dimen/activity_horizontal_margin"
-    android:layout_marginRight="@dimen/activity_horizontal_margin">
+    android:layout_marginRight="@dimen/activity_horizontal_margin"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
 
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/ic_alert_warning"/>
+        android:src="@drawable/ic_alert_warning" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:text="Driver Details"/>
+        android:text="Driver Details" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        >
+        android:gravity="center_horizontal">
 
         <TextView
             style="@style/invoiceItemText"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Driver Name : " />
 
         <TextView
             android:id="@+id/driver_name"
             style="@style/invoiceItemText"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/padding_8dp"
-            android:layout_marginStart="@dimen/padding_8dp" />
+            android:layout_marginStart="@dimen/padding_8dp"
+            android:layout_weight="1"
+            android:text="Phonenix D127" />
     </LinearLayout>
 
     <LinearLayout
@@ -49,21 +50,115 @@
         <TextView
             style="@style/invoiceItemText"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Driver Phone : " />
 
         <TextView
             android:id="@+id/driver_number"
             style="@style/invoiceItemText"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="1234"
             android:layout_marginLeft="@dimen/padding_8dp"
-            android:layout_marginStart="@dimen/padding_8dp" />
+            android:layout_marginStart="@dimen/padding_8dp"
+            android:layout_weight="1"
+            android:text="4567894127" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+
+        <TextView
+            style="@style/invoiceItemText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Cab Type : " />
+
+        <TextView
+            android:id="@+id/cab_type"
+            style="@style/invoiceItemText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_8dp"
+            android:layout_marginStart="@dimen/padding_8dp"
+            android:layout_weight="1"
+            android:text="Sedan" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+
+        <TextView
+            style="@style/invoiceItemText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Cab Model: " />
+
+        <TextView
+            android:id="@+id/car_name"
+            style="@style/invoiceItemText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_8dp"
+            android:layout_marginStart="@dimen/padding_8dp"
+            android:layout_weight="1"
+            android:text="Toyota Corolla" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+
+        <TextView
+            style="@style/invoiceItemText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Hospital Details: " />
+
+        <TextView
+            android:id="@+id/destination_details"
+            style="@style/invoiceItemText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/padding_8dp"
+            android:layout_marginStart="@dimen/padding_8dp"
+            android:layout_weight="1"
+            android:text="" />
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/navigate"
+        style="@style/ColoredButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:gravity="center"
+        android:text="Navigate to Doctor"
+        android:textAllCaps="true" />
+
+    <Button
+        android:id="@+id/cancel_button"
+        style="@style/ColoredButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:gravity="center"
+        android:text="CANCEL EMERGENCY"
+        android:textAllCaps="true" />
 
 
 </LinearLayout>

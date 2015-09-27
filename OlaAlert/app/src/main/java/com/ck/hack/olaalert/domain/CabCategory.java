@@ -6,14 +6,14 @@ package com.ck.hack.olaalert.domain;
 public class CabCategory {
 
     private String id;
-    private String displayName;
+    private String display_name;
     private String currency;
-    private String distanceUnit;
-    private String timeUnit;
+    private String distance_unit;
+    private String time_unit;
     private double eta;
     private String distance;
     private String image;
-    private FareBreakUp fareBreakup;
+    //private FareBreakUp fare_breakup;
 
     public String getCurrency() {
         return currency;
@@ -24,11 +24,11 @@ public class CabCategory {
     }
 
     public String getDisplayName() {
-        return displayName;
+        return display_name;
     }
 
     public void setDisplayName(String displayName) {
-        this.displayName = displayName;
+        this.display_name = displayName;
     }
 
     public String getDistance() {
@@ -40,11 +40,11 @@ public class CabCategory {
     }
 
     public String getDistanceUnit() {
-        return distanceUnit;
+        return distance_unit;
     }
 
     public void setDistanceUnit(String distanceUnit) {
-        this.distanceUnit = distanceUnit;
+        this.distance_unit = distanceUnit;
     }
 
     public double getEta() {
@@ -55,13 +55,13 @@ public class CabCategory {
         this.eta = eta;
     }
 
-    public FareBreakUp getFareBreakup() {
-        return fareBreakup;
-    }
-
-    public void setFareBreakup(FareBreakUp fareBreakup) {
-        this.fareBreakup = fareBreakup;
-    }
+//    public FareBreakUp getFareBreakup() {
+//        return fare_breakup;
+//    }
+//
+//    public void setFareBreakup(FareBreakUp fareBreakup) {
+//        this.fare_breakup = fareBreakup;
+//    }
 
     public String getId() {
         return id;
@@ -80,10 +80,10 @@ public class CabCategory {
     }
 
     public String getTimeUnit() {
-        return timeUnit;
+        return time_unit;
     }
 
     public void setTimeUnit(String timeUnit) {
-        this.timeUnit = timeUnit;
+        this.time_unit = timeUnit;
     }
 }

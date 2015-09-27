@@ -19,6 +19,7 @@ import com.ck.hack.olaalert.app.DataManager;
 import com.ck.hack.olaalert.app.OlaAlertApp;
 import com.ck.hack.olaalert.app.UserInfo;
 import com.ck.hack.olaalert.utils.Utils;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Arrays;
 
@@ -51,6 +52,11 @@ public class MainActivity extends AppCompatActivity {
         } else {
             showPage(Screen.HOME_PAGE);
         }
+    }
+
+    public void showDriverDetailsPage(String intentExtra, LatLng currLoc) {
+        Fragment f = DriverDetailsFragment.getInstance(intentExtra, currLoc.latitude, currLoc.longitude);
+        mFragMan.beginTransaction().replace(R.id.fragment, f).commitAllowingStateLoss();
     }
 
     public void showPage(Screen screen) {

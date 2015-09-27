@@ -14,13 +14,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.ScrollView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.ck.hack.olaalert.R;
 import com.ck.hack.olaalert.app.DataManager;
 import com.ck.hack.olaalert.app.OlaAlertApp;
+import com.ck.hack.olaalert.domain.CabBookingResponse;
+import com.ck.hack.olaalert.domain.CabCategory;
+import com.ck.hack.olaalert.domain.ProductsResponse;
+import com.ck.hack.olaalert.domain.ResponseListener;
+import com.ck.hack.olaalert.service.OlaService;
 import com.ck.hack.olaalert.utils.BackgroundLooper;
 import com.ck.hack.olaalert.utils.Utils;
 import com.google.android.gms.common.ConnectionResult;
@@ -34,13 +40,14 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
 
 /**
  * Created by Satvik on 27/09/15.
  */
 public class HomeFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnMapClickListener,
-        GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerDragListener, LocationListener, GoogleMap.OnMyLocationChangeListener {
+        GoogleMap.OnMapLongClickListener, GoogleMap.OnMarkerDragListener, LocationListener, GoogleMap.OnMyLocationChangeListener, View.OnClickListener {
 
     private static final String LOGTAG = HomeFragment.class.getSimpleName();
 
@@ -57,7 +64,7 @@ public class HomeFragment extends Fragment implements GoogleApiClient.Connection
     private Location mLocation;
     private DataManager mDataManager;
     private Handler mBkgHandler = new Handler(BackgroundLooper.getInstance());
-
+    private Button mMedicalEmergencyButton;
 
     public HomeFragment() {
         // NO OP
@@ -112,6 +119,9 @@ public class HomeFragment extends Fragment implements GoogleApiClient.Connection
         if (mCurrentLatLng != null) {
             updateMarker(mCurrentLatLng);
         }
+
+        mMedicalEmergencyButton = (Button) rootView.findViewById(R.id.emerg_button);
+        mMedicalEmergencyButton.setOnClickListener(this);
         return rootView;
     }
 
@@ -276,5 +286,54 @@ public class HomeFragment extends Fragment implements GoogleApiClient.Connection
             LatLng newLatLng = new LatLng(location.getLatitude(), location.getLongitude());
             updateMarker(newLatLng);
         }
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.emerg_button) {
+            OlaService olaService = mDataManager.getOlaService();
+            mProgressBar.setVisibility(View.VISIBLE);
+            Response.Listener<ProductsResponse> listener = new Response.Listener<ProductsResponse>() {
+                @Override
+                public void onResponse(ProductsResponse response) {
+                    Log.v(LOGTAG, "success ");
+                    for (CabCategory category :  response.getCategories()) {
+                        Log.v(LOGTAG, ""+category.getDisplayName());
+                        bookCab(category.getDisplayName());
+                        break;
+                    }
+                }
+            };
+
+            Response.ErrorListener errorListener = new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.v(LOGTAG, "Listing Products error : " + error.getMessage());
+                }
+            };
+            olaService.listCabProducts(mCurrentLatLng, listener, errorListener);
+        }
+    }
+
+    private void bookCab(String category) {
+        Response.Listener<CabBookingResponse> listener = new Response.Listener<CabBookingResponse>() {
+            @Override
+            public void onResponse(CabBookingResponse response) {
+                Log.v(LOGTAG, "success ");
+                mProgressBar.setVisibility(View.GONE);
+                MainActivity host = (MainActivity) getActivity();
+                Gson gson = new Gson();
+                host.showDriverDetailsPage(gson.toJson(response, CabBookingResponse.class), mCurrentLatLng);
+            }
+        };
+
+        Response.ErrorListener errorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.v(LOGTAG, "Booking error : " + error.getMessage() + " "+error.getCause());
+            }
+        };
+        OlaService olaService = mDataManager.getOlaService();
+        olaService.bookCab(mCurrentLatLng, listener, errorListener);
     }
 }

@@ -7,7 +7,7 @@ public class RideEstimate {
 
     private String category;
     private Double distance;
-    private Integer travelTimeInMinutes;
+    private Integer travel_time_in_minutes;
     private Integer amountMin;
     private Integer amountMax;
 
@@ -44,10 +44,10 @@ public class RideEstimate {
     }
 
     public Integer getTravelTimeInMinutes() {
-        return travelTimeInMinutes;
+        return travel_time_in_minutes;
     }
 
     public void setTravelTimeInMinutes(Integer travelTimeInMinutes) {
-        this.travelTimeInMinutes = travelTimeInMinutes;
+        this.travel_time_in_minutes = travelTimeInMinutes;
     }
 }

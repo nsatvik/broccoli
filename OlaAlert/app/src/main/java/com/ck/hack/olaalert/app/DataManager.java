@@ -60,6 +60,8 @@ public class DataManager {
 
                     mRequestQueue = Volley.newRequestQueue(mContext);
 
+                    mOlaService = new OlaService(DataManager.this);
+
                     mLoaded = true;
                     mLock.notifyAll();
                 }
@@ -77,6 +79,12 @@ public class DataManager {
                 }
             }
         }
+    }
+
+
+    public OlaService getOlaService() {
+        awaitLoadCompletion();
+        return mOlaService;
     }
 
     public void clearAllRequests() {

@@ -8,4 +8,20 @@ import java.util.List;
 public class ProductsResponse {
     private List<CabCategory> categories;
     private List<RideEstimate> estimates;
+
+    public List<CabCategory> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<CabCategory> categories) {
+        this.categories = categories;
+    }
+
+    public List<RideEstimate> getEstimates() {
+        return estimates;
+    }
+
+    public void setEstimates(List<RideEstimate> estimates) {
+        this.estimates = estimates;
+    }
 }

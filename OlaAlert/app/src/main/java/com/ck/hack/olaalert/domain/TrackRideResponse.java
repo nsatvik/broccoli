@@ -6,10 +6,10 @@ package com.ck.hack.olaalert.domain;
 public class TrackRideResponse {
 
     private String status;
-    private String requestType;
+    private String request_type;
     private String crn;
-    private Double driverLat;
-    private Double driverLong;
+    private Double driver_lat;
+    private Double driver_lng;
     private String bookingStatus;
 
     public String getBookingStatus() {
@@ -29,27 +29,27 @@ public class TrackRideResponse {
     }
 
     public Double getDriverLat() {
-        return driverLat;
+        return driver_lat;
     }
 
     public void setDriverLat(Double driverLat) {
-        this.driverLat = driverLat;
+        this.driver_lat = driverLat;
     }
 
     public Double getDriverLong() {
-        return driverLong;
+        return driver_lng;
     }
 
     public void setDriverLong(Double driverLong) {
-        this.driverLong = driverLong;
+        this.driver_lng = driverLong;
     }
 
     public String getRequestType() {
-        return requestType;
+        return request_type;
     }
 
     public void setRequestType(String requestType) {
-        this.requestType = requestType;
+        this.request_type = requestType;
     }
 
     public String getStatus() {
