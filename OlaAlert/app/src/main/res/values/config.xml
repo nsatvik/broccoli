@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="user_name">user_name</string>
+    <string name="user_phone_num">user_phone_number</string>
+    <string name="user_email">user_email</string>
+    <string name="is_user_logged_in_key">is_logged_in</string>
+</resources>
