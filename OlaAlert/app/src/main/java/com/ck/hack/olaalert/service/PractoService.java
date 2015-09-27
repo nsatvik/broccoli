@@ -39,8 +39,5 @@ public class PractoService {
         Log.v("PractoService",url);
         GsonRequest getDocReq = new GsonRequest(url, DoctorResponse.class, headers, listener, errorListener );
         queue.add(getDocReq);
-
     }
-
-
 }

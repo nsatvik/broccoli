@@ -1,6 +1,8 @@
 package com.ck.hack.olaalert.ui;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -32,6 +34,7 @@ public class DriverDetailsFragment extends Fragment {
 
     private CabBookingResponse mBookingResponse;
     private PractoService mPractoService;
+    private Doctor mDoctor;
 
     public DriverDetailsFragment() {
         // NO OP
@@ -87,6 +90,7 @@ public class DriverDetailsFragment extends Fragment {
                 public void onResponse(DoctorResponse response) {
                     Log.v(LOGTAG, "Doctor success ");
                     Doctor doc = response.getDoctors().get(0);
+                    mDoctor = doc;
                     docDetails.setText(doc.getDoctor_name()+"\n"+doc.getLocality());
                 }
             };
@@ -101,6 +105,25 @@ public class DriverDetailsFragment extends Fragment {
             LatLng latLng = new LatLng(args.getDouble("lat"), args.getDouble("lng"));
             mPractoService = new PractoService(mDataMan);
             mPractoService.getDoctorDetails(latLng, listener, errorListener);
+
+            rootView.findViewById(R.id.navigate).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Uri location = null;
+
+                    if (mDoctor != null) {
+                        location = Uri.parse("http://maps.google.com/maps?daddr=" + mDoctor.getLocality_latitude() + "," + mDoctor.getLocality_longitude());
+                    } else {
+                        location = Uri.parse("http://maps.google.com/maps?daddr=12.9596717,77.6467143");
+                    }
+                    Intent intent = new Intent(Intent.ACTION_VIEW, location);
+                    try {
+                        startActivity(intent);
+                    } catch (android.content.ActivityNotFoundException ex) {
+                        Log.v(LOGTAG, "Maps app not found!");
+                    }
+                }
+            });
         }
 
         return rootView;

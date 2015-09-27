@@ -131,7 +131,7 @@
             android:layout_marginLeft="@dimen/padding_8dp"
             android:layout_marginStart="@dimen/padding_8dp"
             android:layout_weight="1"
-            android:text="" />
+            android:text="Manipal Hospital\nOld Airport road" />
     </LinearLayout>
 
 

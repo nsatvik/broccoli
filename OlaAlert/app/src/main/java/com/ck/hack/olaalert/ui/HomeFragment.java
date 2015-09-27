@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -309,6 +310,8 @@ public class HomeFragment extends Fragment implements GoogleApiClient.Connection
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Log.v(LOGTAG, "Listing Products error : " + error.getMessage());
+                    Toast.makeText(getActivity(), "No cabs found!", Toast.LENGTH_LONG).show();
+                            mProgressBar.setVisibility(View.GONE);
                 }
             };
             olaService.listCabProducts(mCurrentLatLng, listener, errorListener);
@@ -330,6 +333,8 @@ public class HomeFragment extends Fragment implements GoogleApiClient.Connection
         Response.ErrorListener errorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(), "No cabs found!", Toast.LENGTH_LONG).show();
+                mProgressBar.setVisibility(View.GONE);
                 Log.v(LOGTAG, "Booking error : " + error.getMessage() + " "+error.getCause());
             }
         };
