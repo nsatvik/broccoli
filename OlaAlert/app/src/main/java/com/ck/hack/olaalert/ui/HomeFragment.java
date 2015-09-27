@@ -327,9 +327,14 @@ public class HomeFragment extends Fragment implements GoogleApiClient.Connection
             public void onResponse(CabBookingResponse response) {
                 Log.v(LOGTAG, "success ");
                 mProgressBar.setVisibility(View.GONE);
-                MainActivity host = (MainActivity) getActivity();
-                Gson gson = new Gson();
-                host.showDriverDetailsPage(gson.toJson(response, CabBookingResponse.class), mCurrentLatLng);
+                if (response.getStatus() == null || !response.getStatus().equals("FAILURE")) {
+                    MainActivity host = (MainActivity) getActivity();
+                    Gson gson = new Gson();
+                    host.showDriverDetailsPage(gson.toJson(response, CabBookingResponse.class), mCurrentLatLng);
+                } else {
+                    Toast.makeText(getActivity(), "No cabs found!", Toast.LENGTH_LONG).show();
+                    mProgressBar.setVisibility(View.GONE);
+                }
             }
         };
 

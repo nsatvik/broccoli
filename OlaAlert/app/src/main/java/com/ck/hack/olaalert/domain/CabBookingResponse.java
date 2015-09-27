@@ -5,7 +5,35 @@ package com.ck.hack.olaalert.domain;
  */
 public class CabBookingResponse {
 
+    private String status;
+    private String code;
+    private String message;
     private String crn;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     private String driver_name;
     private String driver_number;
     private String cab_type;
